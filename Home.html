@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet"href="style.css"/>
+   <title>KATHETRO BANK</title>
+   <style>
+         nav a {
+      margin-right: 10px;
+      color: white:
+      text-decoration: none;
+    }
+   </style>
+  
+   
+</head>
+<body>
+   <header>
+      <h1>WELCOME TO KATHETRO</h1>
+      <h2>YOUR NUMBER 1 BANKING SYSTEM</h2>
+
+      <nav>
+        <a href="Employee Quiries.html">Home</a>|
+        <a href="Account Quiries.html">menu</a>|
+        <a href="Balance Records.html">Events</a>|
+        <a href="Account Profile.html">contact</a>|
+        <a href="Logout.html">contact</a>
+      </nav>
+        
+ <div class="search-container">
+    <input type="text" id="searchBar" placeholder="Search pages... (e.g. Menu)">
+    <button id="searchButton" class="icon-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill=" #B0903D" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+    </button>
+    <button id="voiceButton" class="icon-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill=" #B0903D" viewBox="0 0 16 16">
+            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+            <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"/>
+        </svg>
+    </button>
+</div>
+   
+   </header>
+   <p>KATHETRO offers you with a unique menu that lets 
+      <br>you explore the world of food with your taste buds
+      <br>We offer you  with the best services and 
+      <br>make your dream event worth your Dime</p>
+  <script>
+     document.addEventListener('DOMContentLoaded', function() {
+    const searchBar = document.getElementById('searchBar');
+    const searchButton = document.getElementById('searchButton');
+    const voiceButton = document.getElementById('voiceButton');
+   
+    // Page mappings
+    const pageMap = {
+        'home': 'index.html',
+        'menu': 'Menu.html',
+        'african': 'African-cuisine.html',
+        'african cuisine': 'African-cuisine.html',
+        'asian': 'Asian-cuisine.html',
+        'asian cuisine': 'Asian-cuisine.html',
+        'european': 'European-cuisine.html',
+        'european cuisine': 'European-cuisine.html',
+        'events': 'Event.html',
+        'contact': 'contact.html',
+        'contacts': 'contact.html'
+    };
+   
+    // Handle text search
+    function handleSearch() {
+        const query = searchBar.value.toLowerCase().trim();
+       
+        for (const [keyword, page] of Object.entries(pageMap)) {
+            if (query.includes(keyword)) {
+                window.location.href = page;
+                return;
+            }
+        }
+       
+        alert("Sorry, we couldn't find that page. Try searching for: Menu, African cuisine, Asian cuisine, European cuisine, Events, or contacts");
+    }
+   
+    searchButton.addEventListener('click', handleSearch);
+    searchBar.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
+   
+    // Handle voice search
+    voiceButton.addEventListener('click', function() {
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+           
+            recognition.onstart = function() {
+                searchBar.placeholder = "Listening...";
+            };
+           
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                searchBar.value = transcript;
+                handleSearch();
+            };
+           
+            recognition.onerror = function(event) {
+                searchBar.placeholder = "Search pages... (e.g. Menu, African cuisine)";
+                console.error('Voice recognition error', event.error);
+            };
+           
+            recognition.onend = function() {
+                searchBar.placeholder = "Search pages... (e.g. Menu, African cuisine)";
+            };
+           
+            recognition.start();
+        } else {
+            alert("Voice search is not supported in your browser. Try Chrome or Edge.");
+        }
+    });
+});
+   
+   </script>
+</body>
+</html>
+   
