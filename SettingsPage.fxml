@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="550.0" prefWidth="650.0"
+            style="-fx-background-color: #f0f4f8;"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bankingsystem.SettingsPageController">
+
+    <VBox alignment="TOP_CENTER" spacing="25" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+
+        <Label text="User Settings and Security" textFill="#11366D">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Label>
+
+        <!-- Change Password Section -->
+        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <Label text="Security and Password" style="-fx-font-size: 18pt; -fx-font-weight: bold; -fx-text-fill: #e53e3e;" />
+
+            <GridPane hgap="15" vgap="10">
+                <Label text="Current Password:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;" />
+                <PasswordField fx:id="currentPasswordField" promptText="Enter current password" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300" />
+
+                <Label text="New Password:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;" />
+                <PasswordField fx:id="newPasswordField" promptText="Enter new password" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                <Label text="Confirm New Password:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;" />
+                <PasswordField fx:id="confirmPasswordField" promptText="Re-enter new password" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            </GridPane>
+
+            <Button text="Update Password"
+                    onAction="#handleChangePassword"
+                    style="-fx-background-color: #e53e3e; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14pt; -fx-background-radius: 8;"
+                    prefWidth="200">
+                <VBox.margin>
+                    <Insets top="10" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+
+        <!-- Contact Information Section -->
+        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <Label text="Contact Information" style="-fx-font-size: 18pt; -fx-font-weight: bold; -fx-text-fill: #4299e1;" />
+
+            <GridPane hgap="15" vgap="10">
+                <Label text="Email:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;" />
+                <TextField fx:id="emailField" promptText="user@example.com" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300" />
+
+                <Label text="Phone:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;" />
+                <TextField fx:id="phoneField" promptText="+1 (555) 123-4567" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            </GridPane>
+
+            <Button text="Update Contact Info"
+                    onAction="#handleUpdateContact"
+                    style="-fx-background-color: #4299e1; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14pt; -fx-background-radius: 8;"
+                    prefWidth="200">
+                <VBox.margin>
+                    <Insets top="10" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+
+        <!-- Back Button -->
+        <Button text="← Back to Main Menu"
+                onAction="#handleBackToMenu"
+                prefHeight="40.0" prefWidth="250.0"
+                style="-fx-background-color: #718096; -fx-text-fill: white; -fx-font-size: 14pt; -fx-background-radius: 8;">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </Button>
+
+    </VBox>
+</AnchorPane>
