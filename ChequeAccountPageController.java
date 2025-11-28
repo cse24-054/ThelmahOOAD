@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL; // Added URL import
 import java.util.Optional;
 
 // NOTE: Renamed to ChequeAccountController for naming consistency
@@ -42,8 +43,7 @@ public class ChequeAccountPageController {
     public void initialize() {
         System.out.println("Initializing ChequeAccountController...");
 
-        // 1. FIX: Get the current customer using the CORRECT static method name
-        // as defined in your LoginPageController: getLoggedInCustomer().
+        // 1. Get the current customer
         currentCustomer = LoginPageController.getLoggedInCustomer();
 
         if (currentCustomer == null) {
@@ -53,12 +53,11 @@ public class ChequeAccountPageController {
             return;
         }
 
-        // 2. Find the Cheque Account using the dedicated, type-safe method (assumed to be in Customer.java)
+        // 2. Find the Cheque Account
         Optional<ChequeAccount> accountOpt = currentCustomer.getChequeAccount();
 
         if (accountOpt.isPresent()) {
             chequeAccount = accountOpt.get();
-
             // 3. Display real data
             updateAccountDisplay();
 
@@ -79,10 +78,7 @@ public class ChequeAccountPageController {
             // Format balance to two decimal places with comma separation
             balanceValueLabel.setText(String.format("$%,.2f", chequeAccount.getBalance()));
 
-            // Display specific Cheque Account details, including the Overdraft Limit
-            // NOTE: The Overdraft Limit label in FXML is fx:id="overdraftLimitLabel".
-            // We should use it here if it were declared in this Java file.
-            // For now, it's just shown in the TextArea.
+            // Display specific Cheque Account details
             chequeTextArea.setText(
                     String.format("Account Holder: %s\n", currentCustomer.getFullName()) +
                             String.format("Account Number: %s\n", chequeAccount.getAccountNumber()) +
@@ -95,27 +91,31 @@ public class ChequeAccountPageController {
     }
 
 
-    // --- ACTION HANDLERS (Updated to pass context) ---
+    // --- ACTION HANDLERS (Updated FXML paths) ---
 
     @FXML
     private void handleWithdraw(ActionEvent event) {
-        navigateToActionPage(event, "/fxml/WithdrawPage.fxml", "Withdraw Funds", CHEQUE_ACCOUNT_TYPE);
+        // Assume FXML file is named Withdraw.fxml
+        navigateToActionPage(event, "/fxml/Withdraw.fxml", "Withdraw Funds", CHEQUE_ACCOUNT_TYPE);
     }
 
     @FXML
     private void handleDeposit(ActionEvent event) {
-        navigateToActionPage(event, "/fxml/DepositPage.fxml", "Deposit Funds", CHEQUE_ACCOUNT_TYPE);
+        // Assume FXML file is named Deposit.fxml
+        navigateToActionPage(event, "/fxml/Deposit.fxml", "Deposit Funds", CHEQUE_ACCOUNT_TYPE);
     }
 
     @FXML
     private void handleTransferFunds(ActionEvent event) {
-        navigateToActionPage(event, "/fxml/TransferPage.fxml", "Transfer Funds", CHEQUE_ACCOUNT_TYPE);
+        // CRITICAL FIX: Changed from '/fxml/TransferPage.fxml' to '/fxml/Transfer.fxml'
+        // based on common naming convention and previous file name.
+        navigateToActionPage(event, "/fxml/transfer .fxml", "Transfer Funds", CHEQUE_ACCOUNT_TYPE);
     }
 
 
     @FXML
     private void handleViewTransaction(ActionEvent event) {
-        // Assuming a generic Transaction View page exists
+        // Assume FXML file is named ViewTransactions.fxml
         navigateToActionPage(event, "/fxml/ViewTransactions.fxml", "View Transactions", CHEQUE_ACCOUNT_TYPE);
     }
 
@@ -154,21 +154,31 @@ public class ChequeAccountPageController {
         }
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            // Use getClass().getResource() to find the file
+            URL fxmlUrl = getClass().getResource(fxmlPath);
+
+            if (fxmlUrl == null) {
+                // If the resource is null, it means the file was not found, which is the cause of the IllegalStateException.
+                System.err.println("ERROR: FXML resource not found at path: " + fxmlPath);
+                // Throw an exception to halt execution if the resource is missing
+                throw new IOException("FXML file not found: " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
 
             // *** IMPORTANT CONTEXT PASSING LOGIC ***
-            // Assuming your target controllers (Withdraw/Deposit/Transfer) implement
-            // an interface like 'ActionControllerBase' with a 'setSourceAccount' method.
+            // This is the correct place to pass the source account (chequeAccount) to the transferController.
             Object controller = loader.getController();
 
-            // Since I don't have the definition for ActionControllerBase, I'll leave the
-            // required logic commented out to ensure compilation, but this is where
-            // you'd pass the 'chequeAccount' object:
-            // if (controller instanceof ActionControllerBase actionController) {
-            //     actionController.setSourceAccount(chequeAccount, accountType);
-            // }
-
+            // Assuming transferController has a public method setSourceAccount(Account, String)
+            if (controller instanceof transferController) {
+                // Cast and call the setter to pass the required data
+                ((transferController) controller).setSourceAccount(chequeAccount, accountType);
+            } else {
+                // Log a warning if the controller isn't the expected type
+                System.out.println("Warning: Destination controller is not of type transferController. Data was not passed.");
+            }
 
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -179,7 +189,7 @@ public class ChequeAccountPageController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error loading " + fxmlPath + ". Ensure the file exists and the path is correct.");
+            System.err.println("Fatal Error: Could not load FXML file. Details: " + e.getMessage());
         }
     }
 }

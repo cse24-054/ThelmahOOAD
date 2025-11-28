@@ -113,7 +113,7 @@ public class InvestmentAccountPageController {
     @FXML
     private void handleTransfer(ActionEvent event) {
         // Transfer involves selecting a target account, but we still identify the source account.
-        navigateToActionPage(event, "/fxml/TransferPage.fxml", "Transfer Funds", INVESTMENT_ACCOUNT_TYPE, transferController.class);
+        navigateToActionPage(event, "/fxml/transfer .fxml", "Transfer Funds", INVESTMENT_ACCOUNT_TYPE, transferController.class);
     }
 
     @FXML
