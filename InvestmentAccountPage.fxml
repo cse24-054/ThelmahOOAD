@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ButtonBar?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="550.0" prefWidth="650.0"
+            style="-fx-background-color: #f0f4f8;"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bankingsystem.InvestmentAccountPageController">
+
+    <VBox alignment="TOP_CENTER" spacing="20" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+
+        <Label text="com.bankingsystem.Investment com.bankingsystem.Account" textFill="#11366D">
+            <font>
+                <Font name="System Bold" size="36.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </Label>
+
+        <!-- com.bankingsystem.Account Summary and Actions -->
+        <AnchorPane prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #e2e8f0; -fx-border-radius: 10; -fx-background-radius: 10;">
+
+            <Label fx:id="currentBalanceLabel" layoutX="30.0" layoutY="30.0" text="Current Balance:" textFill="#555555">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+
+            <Label fx:id="balanceValueLabel" layoutX="30.0" layoutY="60.0" text="\$45,221.70" textFill="#38a169">
+                <font>
+                    <Font name="System Bold" size="30.0" />
+                </font>
+            </Label>
+
+            <!-- Actions Section (Left side) -->
+            <VBox layoutX="30.0" layoutY="120.0" spacing="15.0" prefWidth="200.0">
+                <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#handleWithdraw"
+                        prefHeight="40.0" prefWidth="200.0" text="Withdraw / Sell"
+                        style="-fx-background-color: #e53e3e; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
+
+                <Button fx:id="depositButton" mnemonicParsing="false" onAction="#handleDeposit"
+                        prefHeight="40.0" prefWidth="200.0" text="Deposit / Buy"
+                        style="-fx-background-color: #38a169; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
+
+                <Button fx:id="TransferButton" mnemonicParsing="false" onAction="#handleTransfer"
+                        prefHeight="40.0" prefWidth="200.0" text="Transfer Funds"
+                        style="-fx-background-color: #4299e1; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            </VBox>
+
+            <!-- Transaction Area (Right side) -->
+            <Label layoutX="300.0" layoutY="10.0" text="Portfolio Summary / Transactions" textFill="#11366D">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Label>
+            <TextArea fx:id="investmentTextAtrea" layoutX="300.0" layoutY="35.0" prefHeight="240.0" prefWidth="290.0" style="-fx-border-color: #e2e8f0; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+
+            <Button fx:id="viewTransactionButton" layoutX="300.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleViewTransaction"
+                    prefHeight="25.0" prefWidth="140.0" text="View Full History"
+                    style="-fx-background-color: #718096; -fx-text-fill: white; -fx-font-size: 12pt; -fx-background-radius: 5;" />
+
+        </AnchorPane>
+
+        <!-- Exit Button -->
+        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#handleExit"
+                prefHeight="40.0" prefWidth="250.0" text="← Back to My Accounts"
+                style="-fx-background-color: #11366D; -fx-text-fill: white; -fx-font-size: 14pt; -fx-background-radius: 8;">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </Button>
+
+    </VBox>
+</AnchorPane>

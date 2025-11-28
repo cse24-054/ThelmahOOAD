@@ -1,3 +1,6 @@
+import com.bankingsystem.Account;
+import com.bankingsystem.InterestBearing;
+
 public class Investment extends Account implements InterestBearing {
 
     public Investment(String accountNumber, String branch) {
@@ -11,7 +14,7 @@ public class Investment extends Account implements InterestBearing {
 
     // Optional display method
     public void displayAccountDetails() {
-        System.out.println("Investment Account [" + accountNumber + "]");
+        System.out.println("com.bankingsystem.Investment com.bankingsystem.Account [" + accountNumber + "]");
         System.out.println("Branch: " + branch);
         System.out.println("Current Balance: " + balance);
     }
